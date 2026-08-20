@@ -1,90 +1,58 @@
 // ==========================================
-// 1. 서비스 탭 전환 로직 (동물상 테스트 vs 로또 추첨 vs 가이드)
+// 1. 테마 관리 (다크모드 / 라이트모드)
 // ==========================================
-const tabAnimal = document.getElementById('tab-animal');
-const tabLotto = document.getElementById('tab-lotto');
-const tabGuides = document.getElementById('tab-guides');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeText = document.getElementById('theme-text');
 
-const serviceAnimal = document.getElementById('service-animal');
-const serviceLotto = document.getElementById('service-lotto');
-const serviceGuides = document.getElementById('service-guides');
-
-const mainHeaderTitle = document.getElementById('main-header-title');
-const mainHeaderSubtitle = document.getElementById('main-header-subtitle');
-
-function switchService(serviceName) {
-    const tabs = [tabAnimal, tabLotto, tabGuides];
-    const sections = [serviceAnimal, serviceLotto, serviceGuides];
-
-    tabs.forEach(tab => tab && tab.classList.remove('active'));
-    sections.forEach(sec => sec && (sec.style.display = 'none'));
-
-    if (serviceName === 'lotto') {
-        if (tabLotto) tabLotto.classList.add('active');
-        if (serviceLotto) serviceLotto.style.display = 'block';
-        if (mainHeaderTitle) mainHeaderTitle.textContent = '🎱 행운의 로또 6/45 연구소';
-        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '인생역전! 오늘의 6가지 행운 번호를 뽑아보세요';
-        window.location.hash = 'lotto';
-    } else if (serviceName === 'guides') {
-        if (tabGuides) tabGuides.classList.add('active');
-        if (serviceGuides) serviceGuides.style.display = 'block';
-        if (mainHeaderTitle) mainHeaderTitle.textContent = '📚 관상 & 인공지능 분석 가이드';
-        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '동물상 관상학적 매력 분석과 AI 및 로또 통계 심층 칼럼';
-        window.location.hash = 'guides';
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    if (theme === 'dark') {
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = '라이트';
     } else {
-        if (tabAnimal) tabAnimal.classList.add('active');
-        if (serviceAnimal) serviceAnimal.style.display = 'block';
-        if (mainHeaderTitle) mainHeaderTitle.textContent = '🐾 AI 동물상 테스트';
-        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '인공지능이 분석하는 나의 얼굴 동물상! 나는 강아지상일까, 고양이상일까?';
-        window.location.hash = 'animal';
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = '다크';
+    }
+
+    if (typeof DISQUS !== 'undefined') {
+        try {
+            DISQUS.reset({ reload: true });
+        } catch (e) {}
     }
 }
 
-if (tabAnimal) tabAnimal.addEventListener('click', () => switchService('animal'));
-if (tabLotto) tabLotto.addEventListener('click', () => switchService('lotto'));
-if (tabGuides) tabGuides.addEventListener('click', () => switchService('guides'));
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+applyTheme(initialTheme);
 
-// URL 해시에 따른 초기 탭 설정
-if (window.location.hash === '#lotto') {
-    switchService('lotto');
-} else if (window.location.hash === '#guides') {
-    switchService('guides');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+    });
 }
 
 // ==========================================
-// 2. 모달 팝업 컨트롤 (소개, 개인정보처리방침, 이용약관)
+// 2. 토스트 알림 유틸리티
 // ==========================================
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
+const toast = document.getElementById('toast');
+
+function showToast(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2500);
 }
 
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.remove('show');
-        document.body.style.overflow = '';
-    }
-}
-
-window.openModal = openModal;
-window.closeModal = closeModal;
-
-// ESC 키로 모달 닫기
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-backdrop.show').forEach(modal => {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-        });
-    }
-});
-
 // ==========================================
-// 3. 로또 번호 추첨 로직
+// 3. 로또 번호 추첨 로직 (Crypto-safe RNG)
 // ==========================================
 const drawBtn = document.getElementById('draw-btn');
 const lottoContainer = document.getElementById('lotto-container');
@@ -92,11 +60,8 @@ const lottoContainer = document.getElementById('lotto-container');
 if (drawBtn && lottoContainer) {
     drawBtn.addEventListener('click', () => {
         const numbers = generateLottoNumbers();
-        
-        // 기존 공 비우기
         lottoContainer.innerHTML = '';
         
-        // 새로운 번호 공 순차 생성 (애니메이션)
         numbers.forEach((num, index) => {
             setTimeout(() => {
                 const ball = document.createElement('div');
@@ -111,8 +76,10 @@ if (drawBtn && lottoContainer) {
 
 function generateLottoNumbers() {
     const numbers = [];
+    const array = new Uint32Array(1);
     while (numbers.length < 6) {
-        const rand = Math.floor(Math.random() * 45) + 1;
+        window.crypto.getRandomValues(array);
+        const rand = (array[0] % 45) + 1;
         if (!numbers.includes(rand)) {
             numbers.push(rand);
         }
@@ -136,23 +103,24 @@ let model = null;
 
 const ANIMAL_INFO = {
     dog: {
-        badge: '🐶 강아지상',
+        badge: '🐶 강아지상 (Dog Face)',
         badgeClass: 'dog',
         title: '다정하고 사랑스러운 강아지상',
-        desc: '보는 사람을 기분 좋게 만들어주는 따뜻하고 순한 매력의 소유자! 동글동글 선한 눈매와 밝은 미소로 누구에게나 호감을 주는 친근한 에너지를 뿜어냅니다. 주변 사람들에게 사랑을 듬뿍 받는 스타일이에요.',
-        tags: ['#멍뭉미', '#다정다감', '#애교만점', '#친근함', '#순둥이', '#호감형']
+        desc: '보는 사람을 무장해제시키는 선하고 다정한 매력의 소유자! 동글동글 맑은 눈망울과 부드러운 볼선, 기분 좋은 미소로 누구에게나 호감을 주는 친근한 에너지를 뿜어냅니다. 주변 사람들에게 사랑을 듬뿍 받는 힐링형 스타일이에요.',
+        tags: ['#멍뭉미', '#다정다감', '#애교만점', '#친근함', '#순둥이', '#호감형', '#보호본능']
     },
     cat: {
-        badge: '🐱 고양이상',
+        badge: '🐱 고양이상 (Cat Face)',
         badgeClass: 'cat',
         title: '도도하고 매혹적인 고양이상',
-        desc: '또렷하고 매력적인 눈매와 시크한 분위기로 시선을 사로잡는 신비로운 매력의 소유자! 첫인상은 도도하고 쿨해보이지만, 알면 알수록 깊이 빠져드는 츤데레 매력이 가득합니다. 세련된 카리스마가 돋보여요.',
-        tags: ['#냥이상', '#도도함', '#시크매력', '#츤데레', '#신비로움', '#카리스마']
+        desc: '또렷하고 세련된 눈매와 시크한 분위기로 첫눈에 시선을 사로잡는 신비로운 매력의 소유자! 첫인상은 도도하고 차가워 보이지만, 알면 알수록 깊이 빠져드는 츤데레 매력이 가득합니다. 도회적인 카리스마가 돋보여요.',
+        tags: ['#냥이상', '#도도함', '#시크매력', '#츤데레', '#신비로움', '#카리스마', '#세련미']
     }
 };
 
 async function loadModel() {
     if (model) return model;
+    if (typeof tmImage === 'undefined') return null;
     try {
         const modelURL = MODEL_URL + "model.json";
         const metadataURL = MODEL_URL + "metadata.json";
@@ -183,16 +151,15 @@ const catBar = document.getElementById('cat-bar');
 
 const retryBtn = document.getElementById('retry-btn');
 const shareBtn = document.getElementById('share-btn');
-const toast = document.getElementById('toast');
 
-if (selectFileBtn) {
+if (selectFileBtn && imageInput) {
     selectFileBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         imageInput.click();
     });
 }
 
-if (uploadArea) {
+if (uploadArea && imageInput) {
     uploadArea.addEventListener('click', () => {
         imageInput.click();
     });
@@ -238,12 +205,13 @@ function handleImageFile(file) {
 
     const reader = new FileReader();
     reader.onload = (e) => {
+        if (!faceImage) return;
         faceImage.src = e.target.result;
         
-        uploadArea.style.display = 'none';
-        previewArea.style.display = 'block';
-        loadingSpinner.style.display = 'block';
-        resultArea.style.display = 'none';
+        if (uploadArea) uploadArea.style.display = 'none';
+        if (previewArea) previewArea.style.display = 'block';
+        if (loadingSpinner) loadingSpinner.style.display = 'block';
+        if (resultArea) resultArea.style.display = 'none';
 
         faceImage.onload = async () => {
             await predict();
@@ -255,7 +223,7 @@ function handleImageFile(file) {
 async function predict() {
     const aiModel = await loadModel();
     if (!aiModel) {
-        loadingSpinner.style.display = 'none';
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
         alert("AI 모델을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
         resetUpload();
         return;
@@ -286,28 +254,32 @@ async function predict() {
         const primaryAnimal = dogRounded >= catRounded ? 'dog' : 'cat';
         const info = ANIMAL_INFO[primaryAnimal];
 
-        resultBadge.textContent = info.badge;
-        resultBadge.className = `result-badge ${info.badgeClass}`;
-        resultTitle.textContent = info.title;
-        resultDesc.textContent = info.desc;
+        if (resultBadge) {
+            resultBadge.textContent = info.badge;
+            resultBadge.className = `result-badge ${info.badgeClass}`;
+        }
+        if (resultTitle) resultTitle.textContent = info.title;
+        if (resultDesc) resultDesc.textContent = info.desc;
 
-        resultTags.innerHTML = '';
-        info.tags.forEach(tag => {
-            const span = document.createElement('span');
-            span.className = 'tag-badge';
-            span.textContent = tag;
-            resultTags.appendChild(span);
-        });
+        if (resultTags) {
+            resultTags.innerHTML = '';
+            info.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag-badge';
+                span.textContent = tag;
+                resultTags.appendChild(span);
+            });
+        }
 
-        dogPercent.textContent = `${dogRounded}%`;
-        catPercent.textContent = `${catRounded}%`;
+        if (dogPercent) dogPercent.textContent = `${dogRounded}%`;
+        if (catPercent) catPercent.textContent = `${catRounded}%`;
 
-        loadingSpinner.style.display = 'none';
-        resultArea.style.display = 'block';
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+        if (resultArea) resultArea.style.display = 'block';
 
         setTimeout(() => {
-            dogBar.style.width = `${dogRounded}%`;
-            catBar.style.width = `${catRounded}%`;
+            if (dogBar) dogBar.style.width = `${dogRounded}%`;
+            if (catBar) catBar.style.width = `${catRounded}%`;
         }, 100);
 
     } catch (error) {
@@ -335,7 +307,7 @@ if (retryBtn) {
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
         const shareData = {
-            title: 'AI 동물상 테스트 & 로또 6/45 연구소',
+            title: 'AI 동물상 얼굴 테스트 | 럭키앤뷰티 랩',
             text: '인공지능으로 나의 동물상도 분석하고 행운의 로또 번호도 뽑아보세요!',
             url: window.location.href
         };
@@ -355,58 +327,8 @@ if (shareBtn) {
     });
 }
 
-function showToast(message) {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2500);
-}
-
 // ==========================================
-// 5. 테마 관리 (다크모드 / 라이트모드)
-// ==========================================
-const themeToggleBtn = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-const themeText = document.getElementById('theme-text');
-
-function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    if (theme === 'dark') {
-        if (themeIcon) themeIcon.textContent = '☀️';
-        if (themeText) themeText.textContent = '라이트모드';
-    } else {
-        if (themeIcon) themeIcon.textContent = '🌙';
-        if (themeText) themeText.textContent = '다크모드';
-    }
-
-    if (typeof DISQUS !== 'undefined') {
-        DISQUS.reset({ reload: true });
-    }
-}
-
-const savedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-applyTheme(initialTheme);
-
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-    });
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    loadModel();
-});
-
-// ==========================================
-// 6. 제휴 및 문의 폼 (Formspree AJAX)
+// 5. 제휴 및 문의 폼 (Formspree AJAX)
 // ==========================================
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
@@ -433,7 +355,7 @@ if (contactForm) {
             });
 
             if (response.ok) {
-                formStatus.textContent = '✅ 문의가 성공적으로 접수되었습니다! 곧 답변드리겠습니다.';
+                formStatus.textContent = '✅ 문의가 성공적으로 접수되었습니다! 빠른 시일 내에 답변드리겠습니다.';
                 formStatus.className = 'form-status success';
                 contactForm.reset();
             } else {
@@ -455,4 +377,8 @@ if (contactForm) {
     });
 }
 
-
+window.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('upload-area')) {
+        loadModel();
+    }
+});

@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 동물상 테스트 & 로또 6/45 연구소 - 럭키앤뷰티 랩</title>
+    <title>AI 동물상 테스트 & 로또 6/45 연구 포털 | 럭키앤뷰티 랩</title>
     <meta name="google-adsense-account" content="ca-pub-4764608029803832">
-    <meta name="description" content="구글 인공지능(AI) 기반 강아지상 vs 고양이상 동물상 테스트와 통계 기반 로또 6/45 행운 번호 추첨기! 관상학적 동물상 특징 및 확률 분석 가이드를 무료로 만나보세요.">
-    <meta name="keywords" content="동물상 테스트, AI 동물상, 강아지상 고양이상, 로또 추첨기, 로또 번호 생성기, 로또 645, 인공지능 관상">
-    <meta property="og:title" content="AI 동물상 테스트 & 로또 6/45 연구소 - 럭키앤뷰티 랩">
-    <meta property="og:description" content="인공지능이 알려주는 나의 얼굴 동물상 분석과 행운의 로또 번호 추첨, 유익한 칼럼을 한눈에 확인하세요.">
+    <meta name="description" content="인공지능(AI) 기반 강아지상/고양이상 동물상 테스트와 수학적 통계 기반 로또 6/45 행운 번호 추첨, 관상학 및 데이터 분석 전문 칼럼을 무료로 제공합니다.">
+    <meta property="og:title" content="AI 동물상 테스트 & 로또 6/45 연구 포털 | 럭키앤뷰티 랩">
+    <meta property="og:description" content="인공지능(AI) 기반 강아지상/고양이상 동물상 테스트와 수학적 통계 기반 로또 6/45 행운 번호 추첨, 관상학 및 데이터 분석 전문 칼럼을 무료로 제공합니다.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sanz-y.github.io/product/">
-    <link rel="canonical" href="https://sanz-y.github.io/product/">
+    <meta property="og:url" content="https://sanz-y.github.io/product/index.html">
+    <link rel="canonical" href="https://sanz-y.github.io/product/index.html">
     <link rel="stylesheet" href="style.css">
 
     <!-- Google AdSense -->
@@ -21,340 +20,208 @@
     <!-- TensorFlow.js & Teachable Machine Image Library -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-
-    <!-- Schema.org JSON-LD 구조화 데이터 -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "럭키앤뷰티 랩 (AI 동물상 테스트 & 로또 6/45)",
-      "url": "https://sanz-y.github.io/product/",
-      "description": "구글 인공지능 기반 강아지상/고양이상 동물상 분석 및 로또 번호 추첨 서비스",
-      "applicationCategory": "EntertainmentApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "KRW"
-      }
-    }
-    </script>
 </head>
 <body>
-    <div class="container">
-        <!-- 상단 네비게이션 및 헤더 -->
-        <header class="header">
-            <div class="header-titles">
-                <div class="brand-tag">✨ Lucky & Beauty Lab</div>
-                <h1 id="main-header-title">🐾 AI 동물상 테스트</h1>
-                <p id="main-header-subtitle" class="subtitle">인공지능이 분석하는 나의 얼굴 동물상! 나는 강아지상일까, 고양이상일까?</p>
-            </div>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
-                <span class="theme-icon" id="theme-icon">🌙</span>
-                <span class="theme-text" id="theme-text">다크모드</span>
-            </button>
-        </header>
 
-        <!-- 메인 서비스 전환 탭 -->
-        <nav class="nav-tabs" aria-label="서비스 메뉴">
-            <button class="nav-tab active" id="tab-animal" data-service="animal">
-                <span>🐾 AI 동물상 테스트</span>
-            </button>
-            <button class="nav-tab" id="tab-lotto" data-service="lotto">
-                <span>🎱 로또 번호 추첨</span>
-            </button>
-            <button class="nav-tab" id="tab-guides" data-service="guides">
-                <span>📚 분석 가이드</span>
-            </button>
-        </nav>
-
-        <main>
-            <!-- 1. AI 동물상 테스트 서비스 -->
-            <section id="service-animal" class="service-section active">
-                <div class="privacy-badge">
-                    <span>🔒 <strong>안심 보안 안내</strong>: 업로드된 사진은 서버로 전송되지 않으며 브라우저 내에서만 안전하게 분석됩니다.</span>
-                </div>
-
-                <div class="test-card">
-                    <!-- 업로드 전 영역 -->
-                    <div id="upload-area" class="upload-area">
-                        <input type="file" id="image-input" accept="image/*" class="file-input">
-                        <div class="upload-prompt" id="upload-prompt">
-                            <div class="upload-icon">📸</div>
-                            <p class="upload-title">얼굴 사진을 올려주세요</p>
-                            <p class="upload-desc">정면이 잘 나온 사진일수록 AI 분석의 정확도가 높아집니다.<br>(클릭 또는 드래그 앤 드롭)</p>
-                            <button type="button" class="upload-btn" id="select-file-btn">사진 선택하기</button>
-                        </div>
-                    </div>
-
-                    <!-- 미리보기 & 로딩 & 결과 영역 -->
-                    <div id="preview-area" class="preview-area" style="display: none;">
-                        <div class="image-wrapper">
-                            <img id="face-image" src="" alt="업로드된 얼굴 사진 미리보기">
-                        </div>
-                        
-                        <div id="loading-spinner" class="loading-box">
-                            <div class="spinner"></div>
-                            <p class="loading-text">인공지능 신경망이 얼굴 이목구비를 분석하고 있습니다... 🔍</p>
-                        </div>
-
-                        <div id="result-area" class="result-area" style="display: none;">
-                            <div class="result-header">
-                                <span id="result-badge" class="result-badge">결과</span>
-                                <h2 id="result-title" class="result-title">강아지상</h2>
-                                <p id="result-desc" class="result-desc">설명</p>
-                                <div id="result-tags" class="result-tags"></div>
-                            </div>
-
-                            <!-- 퍼센트 그래프 영역 -->
-                            <div class="chart-container">
-                                <div class="chart-item">
-                                    <div class="chart-label">
-                                        <span>🐶 강아지상 지수</span>
-                                        <span id="dog-percent" class="percent-val">0%</span>
-                                    </div>
-                                    <div class="progress-bg">
-                                        <div id="dog-bar" class="progress-bar dog-bar" style="width: 0%;"></div>
-                                    </div>
-                                </div>
-
-                                <div class="chart-item">
-                                    <div class="chart-label">
-                                        <span>🐱 고양이상 지수</span>
-                                        <span id="cat-percent" class="percent-val">0%</span>
-                                    </div>
-                                    <div class="progress-bg">
-                                        <div id="cat-bar" class="progress-bar cat-bar" style="width: 0%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="action-buttons">
-                                <button id="retry-btn" class="btn btn-secondary">🔄 다른 사진으로 다시하기</button>
-                                <button id="share-btn" class="btn btn-primary">🔗 결과 공유하기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. 로또 번호 추첨 서비스 -->
-            <section id="service-lotto" class="service-section" style="display: none;">
-                <div class="lotto-card">
-                    <h2 class="lotto-heading">🍀 행운의 로또 6/45 번호 추첨기</h2>
-                    <p class="lotto-intro">1부터 45까지의 숫자 중 알고리즘 기반으로 엄선된 6개의 행운 번호를 추첨합니다.</p>
-                    <div id="lotto-container" class="ball-container">
-                        <div class="ball placeholder">?</div>
-                        <div class="ball placeholder">?</div>
-                        <div class="ball placeholder">?</div>
-                        <div class="ball placeholder">?</div>
-                        <div class="ball placeholder">?</div>
-                        <div class="ball placeholder">?</div>
-                    </div>
-                    <button id="draw-btn" class="draw-btn">🎱 번호 추첨하기</button>
-                    
-                    <div class="lotto-tip-box">
-                        <h4>💡 로또 번호 색상 구간 안내</h4>
-                        <div class="lotto-color-legend">
-                            <span><strong style="color:#f59e0b;">●</strong> 1~10 (노랑)</span>
-                            <span><strong style="color:#0284c7;">●</strong> 11~20 (파랑)</span>
-                            <span><strong style="color:#dc2626;">●</strong> 21~30 (빨강)</span>
-                            <span><strong style="color:#64748b;">●</strong> 31~40 (회색)</span>
-                            <span><strong style="color:#65a30d;">●</strong> 41~45 (초록)</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. 고품질 정보 및 분석 가이드 (AdSense 고품질 콘텐츠) -->
-            <section id="service-guides" class="service-section" style="display: none;">
-                <div class="guides-container">
-                    <article class="guide-article">
-                        <h2>📖 강아지상 vs 고양이상: 관상과 매력 포인트 심층 분석</h2>
-                        <p>얼굴의 형태와 이목구비의 미세한 각도에 따라 사람의 첫인상은 크게 달라집니다. 특히 대표적인 두 동물상인 '강아지상'과 '고양이상'은 각각 독보적인 매력을 지니고 있습니다.</p>
-                        
-                        <h3>🐶 강아지상의 외모적 특징과 매력</h3>
-                        <ul>
-                            <li><strong>선한 눈매와 부드러운 인상</strong>: 눈꼬리가 약간 처지거나 둥글고 큰 눈망울을 지녀 보는 이로 하여금 다정함과 친근감을 느끼게 합니다.</li>
-                            <li><strong>따뜻한 미소와 호감형 얼굴</strong>: 둥근 볼선과 웃을 때 반달눈이 되는 특징이 있어 주변 사람들에게 사랑을 많이 받는 '힐링형 매력'의 소유자입니다.</li>
-                            <li><strong>스타일링 팁</strong>: 부드러운 파스텔톤 컬러와 자연스러운 웨이브 헤어스타일이 강아지상의 순하고 따뜻한 분위기를 더욱 극대화해 줍니다.</li>
-                        </ul>
-
-                        <h3>🐱 고양이상의 외모적 특징과 매력</h3>
-                        <ul>
-                            <li><strong>또렷한 눈매와 시크한 카리스마</strong>: 눈꼬리가 살짝 올라가 있고 날렵한 턱선을 가져 첫눈에 시선을 사로잡는 신비로운 아우라를 풍깁니다.</li>
-                            <li><strong>도도함 뒤에 숨겨진 츤데레 매력</strong>: 차가워 보이는 첫인상과 달리 알면 알수록 다정하고 깊은 매력을 보여주는 반전미가 돋보입니다.</li>
-                            <li><strong>스타일링 팁</strong>: 또렷한 아이라인과 세련된 모노톤, 비비드한 컬러의 코디가 고양이상 특유의 도회적이고 매혹적인 느낌을 돋보이게 합니다.</li>
-                        </ul>
-                    </article>
-
-                    <article class="guide-article">
-                        <h2>🧠 인공지능(AI) 얼굴 분석 기술의 원리</h2>
-                        <p>본 사이트의 동물상 테스트는 Google의 최신 딥러닝 프레임워크인 <strong>TensorFlow.js</strong>와 <strong>Teachable Machine</strong> 머신러닝 비전 모델을 기반으로 동작합니다.</p>
-                        <p>수천 장의 다양한 얼굴 이미지 데이터셋을 학습한 합성곱 신경망(Convolutional Neural Network, CNN) 모델이 사용자가 업로드한 이미지에서 눈꼬리 각도, 코와 입술의 비율, 얼굴형 윤곽 등의 주요 특징점(Feature Map)을 실시간으로 추출하여 각 동물상과의 유사도를 백분율(%)로 계산합니다.</p>
-                        <p>모든 연산은 외부 서버로 사진을 전송하지 않고 사용자 기기의 웹 브라우저 내 WebGL 가속을 통해 처리되므로 개인정보가 완벽히 보호됩니다.</p>
-                    </article>
-
-                    <article class="guide-article">
-                        <h2>🔢 로또 6/45 수학적 확률과 합리적인 번호 조합 팁</h2>
-                        <p>로또 6/45는 45개의 숫자 중 6개를 맞히는 게임으로, 1등에 당첨될 수학적 확률은 <strong>1 / 8,145,060 (약 814만 분의 1)</strong>입니다.</p>
-                        <ul>
-                            <li><strong>홀수와 짝수의 균형 (Odd-Even Balance)</strong>: 역사적인 역대 당첨 번호 통계에 따르면 6개 번호 모두가 홀수이거나 짝수인 경우는 약 2~3%에 불과하며, 3:3 또는 4:2, 2:4의 비율이 전체의 80% 이상을 차지합니다.</li>
-                            <li><strong>고저 비율 (High-Low Spread)</strong>: 1~22(저번호)와 23~45(고번호)가 골고루 분배된 조합이 특정 구간에 몰린 조합보다 통계적으로 훨씬 높은 출현 빈도를 보입니다.</li>
-                            <li><strong>총합 구간 (Sum Range)</strong>: 6개 번호의 합은 대략 100~175 사이에 집중 분포하는 경향이 있습니다.</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
-
-            <!-- 자주 묻는 질문 (FAQ) -->
-            <section class="faq-section">
-                <h2>❓ 자주 묻는 질문 (FAQ)</h2>
-                <div class="faq-list">
-                    <details class="faq-item">
-                        <summary class="faq-question">Q. 업로드한 사진이 서버에 저장되거나 유출될 위험은 없나요?</summary>
-                        <div class="faq-answer">
-                            <p>전혀 걱정하지 않으셔도 됩니다. 본 서비스는 구글 TensorFlow.js 기술을 이용해 사용자의 스마트폰이나 PC 브라우저 내부에서만 인공지능 추론을 수행합니다. 사진 데이터는 어떠한 서버로도 전송되거나 저장되지 않습니다.</p>
-                        </div>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">Q. 동물상 테스트 결과를 더 정확하게 측정하려면 어떻게 해야 하나요?</summary>
-                        <div class="faq-answer">
-                            <p>선글라스나 마스크를 착용하지 않은 상태에서 얼굴 전체가 밝고 또렷하게 정면으로 나온 사진을 사용할 때 가장 높은 정확도로 동물상을 분석할 수 있습니다.</p>
-                        </div>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">Q. 로또 번호 추첨기는 어떤 방식으로 번호를 생성하나요?</summary>
-                        <div class="faq-answer">
-                            <p>암호학적으로 안전한 난수 생성(Crypto-safe Random) 알고리즘을 활용하여 1부터 45 사이의 6개 중복 없는 숫자를 공정하게 무작위 추첨합니다.</p>
-                        </div>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">Q. 서비스 이용료는 무료인가요?</summary>
-                        <div class="faq-answer">
-                            <p>네! AI 동물상 테스트와 로또 번호 추첨기, 분석 가이드는 누구나 회원가입 없이 평생 100% 무료로 이용하실 수 있습니다.</p>
-                        </div>
-                    </details>
-                </div>
-            </section>
-        </main>
-
-        <hr class="divider">
-
-        <!-- 제휴 및 문의 섹션 -->
-        <section class="inquiry-section">
-            <h2>🤝 제휴 및 서비스 문의</h2>
-            <p class="inquiry-intro">콘텐츠 제휴, 광고 문의, 버그 제보 등 문의사항이 있으시면 아래 양식을 통해 편하게 연락주세요.</p>
-            <form id="contact-form" action="https://formspree.io/f/mvkpdlzv" method="POST">
-                <div class="form-group">
-                    <label for="name">이름 / 기업명</label>
-                    <input type="text" id="name" name="name" placeholder="홍길동 또는 회사명" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">이메일 주소</label>
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">문의 내용</label>
-                    <textarea id="message" name="message" rows="3" placeholder="제휴 내용이나 문의 사항을 입력해 주세요." required></textarea>
-                </div>
-                <button type="submit" id="submit-btn" class="submit-btn">문의 보내기</button>
-                <div id="form-status" class="form-status"></div>
-            </form>
-        </section>
-
-        <hr class="divider">
-
-        <!-- DISQUS 댓글 섹션 -->
-        <section class="comments-section">
-            <h3 class="comments-title">💬 커뮤니티 의견 나누기</h3>
-            <p class="comments-desc">나의 동물상 결과나 로또 번호 추첨 후기를 자유롭게 댓글로 남겨보세요!</p>
-            <div id="disqus_thread"></div>
-            <script>
-                /**
-                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-                /*
-                var disqus_config = function () {
-                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://product-ot07uvrdym.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-            </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        </section>
-
-        <!-- 푸터 영역 (정책 및 정보) -->
-        <footer class="site-footer">
-            <div class="footer-links">
-                <button type="button" class="footer-link-btn" onclick="openModal('about-modal')">서비스 소개</button>
-                <span class="dot">·</span>
-                <button type="button" class="footer-link-btn" onclick="openModal('privacy-modal')">개인정보처리방침</button>
-                <span class="dot">·</span>
-                <button type="button" class="footer-link-btn" onclick="openModal('terms-modal')">이용약관</button>
-            </div>
-            <p class="copyright">© 2026 Lucky & Beauty Lab. All rights reserved.</p>
-            <p class="disclaimer">본 사이트의 동물상 분석 및 로또 번호 추천은 오락 및 참고용 서비스이며, 당첨을 보장하지 않습니다.</p>
-        </footer>
-    </div>
-
-    <!-- 모달: 서비스 소개 -->
-    <div id="about-modal" class="modal-backdrop" onclick="closeModal('about-modal')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>ℹ️ 서비스 소개 (About Us)</h3>
-                <button type="button" class="modal-close-btn" onclick="closeModal('about-modal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <p><strong>럭키앤뷰티 랩(Lucky & Beauty Lab)</strong>은 구글 인공지능 머신러닝 기술을 활용한 재미있는 'AI 동물상 테스트'와 일상에 작은 설렘과 행운을 더해주는 '로또 6/45 번호 추첨' 서비스를 제공하는 라이프스타일 엔터테인먼트 플랫폼입니다.</p>
-                <p>모든 방문자 분들께 즐겁고 유익한 사용자 경험(UX)과 고품질의 정보를 제공하는 것을 최우선 가치로 두고 있습니다.</p>
+    <header class="global-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-badge">✨ LAB</span>
+                <span class="logo-text">럭키앤뷰티 랩</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html" class="active">홈</a>
+                <a href="animal-test.html" class="">🐾 동물상 테스트</a>
+                <a href="lotto.html" class="">🎱 로또 6/45</a>
+                <a href="articles/index.html" class="">📚 칼럼&가이드</a>
+                <a href="about.html" class="">소개</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                    <span class="theme-icon" id="theme-icon">🌙</span>
+                    <span class="theme-text" id="theme-text">다크</span>
+                </button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- 모달: 개인정보처리방침 -->
-    <div id="privacy-modal" class="modal-backdrop" onclick="closeModal('privacy-modal')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>🔒 개인정보처리방침 (Privacy Policy)</h3>
-                <button type="button" class="modal-close-btn" onclick="closeModal('privacy-modal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <h4>1. 수집하는 개인정보 항목</h4>
-                <p>본 사이트는 회원가입 없이 이용 가능하며, 동물상 테스트를 위해 업로드하는 이미지는 이용자의 브라우저 내(클라이언트 단)에서만 처리되고 서버에 일체 수집되거나 저장되지 않습니다.</p>
-                <h4>2. 쿠키(Cookie) 및 구글 애드센스 광고 게재</h4>
-                <p>본 사이트는 이용자에게 적합한 맞춤형 광고를 제공하기 위해 Google AdSense를 사용하며, 제3자 공급업체인 Google은 쿠키를 사용하여 이용자의 본 사이트 및 다른 웹사이트 방문 기록을 바탕으로 광고를 게재할 수 있습니다. 이용자는 <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>에서 맞춤설정 광고를 사용 중지할 수 있습니다.</p>
-                <h4>3. 문의하기 정보 처리</h4>
-                <p>제휴 및 문의 폼을 통해 입력하신 이름, 이메일, 문의 내용은 문의 응대 목적으로만 사용되며 관련 법령에 따라 안전하게 관리됩니다.</p>
+<main class="page-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <span class="hero-badge">🚀 Next-Gen Lifestyle Lab</span>
+            <h1 class="hero-title">인공지능과 데이터로 만나는<br><span class="gradient-text">나의 매력 & 행운 연구소</span></h1>
+            <p class="hero-desc">구글 딥러닝 비전 모델을 활용한 정밀 <strong>동물상 얼굴 분석</strong>과 814만 가지 경우의 수를 분석하는 <strong>로또 6/45 통계 알고리즘</strong>을 경험해보세요.</p>
+            <div class="hero-cta-group">
+                <a href="animal-test.html" class="btn btn-primary">🐾 동물상 테스트 시작하기</a>
+                <a href="lotto.html" class="btn btn-secondary">🎱 로또 번호 추첨하기</a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- 모달: 이용약관 -->
-    <div id="terms-modal" class="modal-backdrop" onclick="closeModal('terms-modal')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>📜 이용약관 (Terms of Service)</h3>
-                <button type="button" class="modal-close-btn" onclick="closeModal('terms-modal')">✕</button>
+    <!-- Main Features Grid -->
+    <section class="featured-services">
+        <div class="section-header">
+            <h2>🔥 핵심 서비스 바로가기</h2>
+            <p>럭키앤뷰티 랩에서 제공하는 대표 스마트 도구를 이용해보세요.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🐶🐱</div>
+                <h3>AI 동물상 얼굴 테스트</h3>
+                <p>수천 장의 얼굴 빅데이터를 학습한 AI가 당신의 이목구비 비율을 분석하여 강아지상과 고양이상 확률을 정확하게 측정해 드립니다.</p>
+                <div class="service-features">
+                    <span>✓ 100% 브라우저 내 안전 분석</span>
+                    <span>✓ 상세 관상학적 성향 해설</span>
+                    <span>✓ 어울리는 스타일링 팁 제공</span>
+                </div>
+                <a href="animal-test.html" class="card-btn">테스트 바로가기 →</a>
             </div>
-            <div class="modal-body">
-                <p>1. 럭키앤뷰티 랩에서 제공하는 AI 동물상 테스트 및 로또 번호 추첨 서비스는 엔터테인먼트 및 정보 제공용 서비스입니다.</p>
-                <p>2. 로또 번호 추첨 결과는 수학적 확률에 기반한 오락용 결과이며, 복권 당첨을 어떠한 형태로도 보증하지 않습니다.</p>
-                <p>3. 이용자는 관련 법령과 공공질서를 준수하여 건전하게 서비스를 이용해야 합니다.</p>
+
+            <div class="service-card">
+                <div class="service-icon">🎱✨</div>
+                <h3>로또 6/45 행운 연구소</h3>
+                <p>단순 무작위 추첨을 넘어 통계학적 고저 비율, 홀짝 분포, 번호대별 균형 원리를 적용한 스마트 로또 번호 생성기입니다.</p>
+                <div class="service-features">
+                    <span>✓ 암호학적 난수 생성(Crypto-RNG)</span>
+                    <span>✓ 색상 구간별 공인 가이드</span>
+                    <span>✓ 역대 당첨 데이터 통계 분석</span>
+                </div>
+                <a href="lotto.html" class="card-btn">번호 추첨 바로가기 →</a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- 공유 알림 토스트 -->
-    <div id="toast" class="toast">링크가 클립보드에 복사되었습니다! 🎉</div>
+    <!-- Latest In-Depth Articles Section -->
+    <section class="latest-articles-section">
+        <div class="section-header">
+            <h2>📚 전문 분석 칼럼 & 가이드</h2>
+            <p>관상학, 인공지능 비전 기술, 통계학에 대한 유익하고 깊이 있는 오리지널 콘텐츠를 만나보세요.</p>
+        </div>
+        <div class="articles-grid">
+            <article class="article-card">
+                <span class="category-tag">관상 & 인상학</span>
+                <h3><a href="articles/animal-face-types.html">강아지상 vs 고양이상: 얼굴 특징과 관상학적 매력 심층 비교</a></h3>
+                <p>선한 눈매의 강아지상과 날렵한 눈꼬리의 고양이상! 두 동물상의 외모적 비율 차이와 어울리는 메이크업, 헤어 스타일링 가이드를 완벽 정리했습니다.</p>
+                <div class="article-meta">
+                    <span>📖 읽는 시간: 5분</span>
+                    <span>📅 2026.08</span>
+                </div>
+            </article>
 
+            <article class="article-card">
+                <span class="category-tag">AI & 머신러닝</span>
+                <h3><a href="articles/ai-computer-vision.html">인공지능(AI)은 어떻게 사진에서 동물상을 인식할까? CNN 신경망 원리</a></h3>
+                <p>구글 Teachable Machine과 TensorFlow.js 기반의 합성곱 신경망(CNN)이 얼굴의 특징점(Feature Map)을 추출하고 분류하는 기술적 메커니즘을 쉽게 설명합니다.</p>
+                <div class="article-meta">
+                    <span>📖 읽는 시간: 6분</span>
+                    <span>📅 2026.08</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <span class="category-tag">통계 & 수학</span>
+                <h3><a href="articles/lotto-statistics-probability.html">로또 6/45 수학적 확률의 진실: 814만 분의 1과 통계학적 조합 전략</a></h3>
+                <p>대수의 법칙(Law of Large Numbers)과 역대 로또 당첨 번호 분포 분석을 통해 알아본 합리적인 번호 선택법과 수학적 통계 원리를 분석합니다.</p>
+                <div class="article-meta">
+                    <span>📖 읽는 시간: 7분</span>
+                    <span>📅 2026.08</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <span class="category-tag">뷰티 & 스타일링</span>
+                <h3><a href="articles/facial-image-styling.html">얼굴형과 인상에 따른 퍼스널 이미지 메이킹 & 스타일링 가이드</a></h3>
+                <p>나의 얼굴 동물상에 어울리는 베스트 컬러 팔레트와 헤어 볼륨 배치, 아이라인 각도로 첫인상을 200% 업그레이드하는 뷰티 솔루션입니다.</p>
+                <div class="article-meta">
+                    <span>📖 읽는 시간: 5분</span>
+                    <span>📅 2026.08</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <span class="category-tag">알고리즘 공학</span>
+                <h3><a href="articles/rng-algorithm-in-lottery.html">난수 생성기(RNG)의 공학적 원리와 복권 추첨의 공정성 검증</a></h3>
+                <p>의사 난수(PRNG)와 진성 난수(TRNG)의 차이점, 그리고 현대 디지털 복권 추첨 시스템이 공정성을 보장하기 위해 채택하는 보안 기술을 알아봅니다.</p>
+                <div class="article-meta">
+                    <span>📖 읽는 시간: 6분</span>
+                    <span>📅 2026.08</span>
+                </div>
+            </article>
+        </div>
+        <div class="view-all-box">
+            <a href="articles/index.html" class="btn btn-outline">전체 칼럼 목록 보기 →</a>
+        </div>
+    </section>
+
+    <!-- Trust & FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>❓ 자주 묻는 질문 (FAQ)</h2>
+            <p>럭키앤뷰티 랩 이용에 대해 궁금하신 점을 빠르게 해결해 드립니다.</p>
+        </div>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary class="faq-question">Q. 사진을 업로드하면 서버에 저장되거나 개인정보가 유출되지 않나요?</summary>
+                <div class="faq-answer">
+                    <p>전혀 유출되지 않습니다. 럭키앤뷰티 랩의 동물상 분석은 사용자의 PC 또는 스마트폰 웹 브라우저 내에서만 실행되는 <strong>클라이언트 사이드 WebGL AI 추론 기술</strong>을 사용합니다. 사진 파일은 어떠한 외부 서버로도 전송되지 않으며 페이지를 새로고침하면 즉시 메모리에서 소멸됩니다.</p>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Q. 동물상 테스트는 어떤 AI 모델을 사용하나요?</summary>
+                <div class="faq-answer">
+                    <p>Google의 오픈소스 머신러닝 라이브러리인 TensorFlow.js와 사전 학습된 Teachable Machine 비전 모델을 결합하여 정밀하게 얼굴 이목구비 특징을 분석합니다.</p>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Q. 로또 6/45 번호 추첨기는 무료로 무제한 이용 가능한가요?</summary>
+                <div class="faq-answer">
+                    <p>네! 회원가입이나 로그인 없이 365일 24시간 언제나 100% 무료로 무제한 번호를 추첨하고 통계 가이드를 열람하실 수 있습니다.</p>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Q. 사이트에 게시된 칼럼 콘텐츠는 신뢰할 수 있나요?</summary>
+                <div class="faq-answer">
+                    <p>본 사이트의 모든 칼럼은 수학적 확률 통계 이론, 컴퓨터 비전 학술 자료, 인상학 및 뷰티 스타일링 전문 서적을 기반으로 럭키앤뷰티 랩 에디터팀이 직접 검수하여 작성한 오리지널 고품질 콘텐츠입니다.</p>
+                </div>
+            </details>
+        </div>
+    </section>
+</main>
+
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <h3>✨ 럭키앤뷰티 랩</h3>
+                    <p>인공지능 비전 기술 기반의 동물상 분석과 수학적 통계 기반의 로또 6/45 연구를 제공하는 라이프스타일 테크 포털입니다.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>서비스 메뉴</h4>
+                    <ul>
+                        <li><a href="animal-test.html">AI 동물상 테스트</a></li>
+                        <li><a href="lotto.html">로또 6/45 번호 추첨</a></li>
+                        <li><a href="articles/index.html">전문 칼럼 & 가이드</a></li>
+                        <li><a href="sitemap.html">전체 사이트맵</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>정책 및 정보</h4>
+                    <ul>
+                        <li><a href="about.html">연구소 소개</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="contact.html">제휴 및 문의</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Lucky & Beauty Lab. All rights reserved.</p>
+                <p class="disclaimer">본 사이트의 AI 분석 및 로또 번호 추첨 서비스는 엔터테인먼트 및 정보 제공용이며, 복권 당첨 등을 보장하지 않습니다.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast">링크가 복사되었습니다! 🎉</div>
     <script src="script.js"></script>
 </body>
 </html>
-

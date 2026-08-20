@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 동물상 얼굴 테스트 - 강아지상 vs 고양이상 분석 | 럭키앤뷰티 랩</title>
+    <meta name="google-adsense-account" content="ca-pub-4764608029803832">
+    <meta name="description" content="구글 인공지능 머신러닝 비전 모델이 나의 얼굴 이목구비 비율을 분석하여 강아지상과 고양이상 확률을 정확하게 측정합니다. 100% 무료 및 안전 분석!">
+    <meta property="og:title" content="AI 동물상 얼굴 테스트 - 강아지상 vs 고양이상 분석 | 럭키앤뷰티 랩">
+    <meta property="og:description" content="구글 인공지능 머신러닝 비전 모델이 나의 얼굴 이목구비 비율을 분석하여 강아지상과 고양이상 확률을 정확하게 측정합니다. 100% 무료 및 안전 분석!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sanz-y.github.io/product/animal-test.html">
+    <link rel="canonical" href="https://sanz-y.github.io/product/animal-test.html">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4764608029803832"
+         crossorigin="anonymous"></script>
+
+    <!-- TensorFlow.js & Teachable Machine Image Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+
+    <header class="global-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-badge">✨ LAB</span>
+                <span class="logo-text">럭키앤뷰티 랩</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html" class="">홈</a>
+                <a href="animal-test.html" class="active">🐾 동물상 테스트</a>
+                <a href="lotto.html" class="">🎱 로또 6/45</a>
+                <a href="articles/index.html" class="">📚 칼럼&가이드</a>
+                <a href="about.html" class="">소개</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                    <span class="theme-icon" id="theme-icon">🌙</span>
+                    <span class="theme-text" id="theme-text">다크</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+<main class="page-container">
+    <div class="content-wrapper">
+        <div class="page-header text-center">
+            <span class="category-badge">AI Vision Analysis</span>
+            <h1>🐾 인공지능(AI) 동물상 얼굴 테스트</h1>
+            <p class="page-subtitle">수천 장의 얼굴 빅데이터를 학습한 AI 모델이 당신의 이목구비를 정밀 분석합니다.</p>
+        </div>
+
+        <div class="privacy-badge">
+            <span>🔒 <strong>개인정보 안심 보장</strong>: 업로드하신 사진은 외부 서버로 전송되지 않으며, 브라우저 내부 메모리에서만 즉시 분석 후 파기됩니다.</span>
+        </div>
+
+        <!-- AI Test Card -->
+        <div class="test-card main-tool-card">
+            <div id="upload-area" class="upload-area">
+                <input type="file" id="image-input" accept="image/*" class="file-input">
+                <div class="upload-prompt" id="upload-prompt">
+                    <div class="upload-icon">📸</div>
+                    <p class="upload-title">분석할 얼굴 사진을 올려주세요</p>
+                    <p class="upload-desc">정면 얼굴이 선명하게 나온 사진일수록 인공지능 분석 정확도가 향상됩니다.<br>(파일을 드래그하거나 아래 버튼을 클릭하세요)</p>
+                    <button type="button" class="upload-btn" id="select-file-btn">내 기기에서 사진 선택</button>
+                </div>
+            </div>
+
+            <div id="preview-area" class="preview-area" style="display: none;">
+                <div class="image-wrapper">
+                    <img id="face-image" src="" alt="업로드된 얼굴 사진">
+                </div>
+                
+                <div id="loading-spinner" class="loading-box">
+                    <div class="spinner"></div>
+                    <p class="loading-text">인공지능 신경망이 이목구비 특징점을 추출하고 있습니다... 🔍</p>
+                </div>
+
+                <div id="result-area" class="result-area" style="display: none;">
+                    <div class="result-header">
+                        <span id="result-badge" class="result-badge">결과 분석 완료</span>
+                        <h2 id="result-title" class="result-title">강아지상</h2>
+                        <p id="result-desc" class="result-desc">설명</p>
+                        <div id="result-tags" class="result-tags"></div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-item">
+                            <div class="chart-label">
+                                <span>🐶 강아지상 지수</span>
+                                <span id="dog-percent" class="percent-val">0%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div id="dog-bar" class="progress-bar dog-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-label">
+                                <span>🐱 고양이상 지수</span>
+                                <span id="cat-percent" class="percent-val">0%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div id="cat-bar" class="progress-bar cat-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="retry-btn" class="btn btn-secondary">🔄 다른 사진으로 재측정</button>
+                        <button id="share-btn" class="btn btn-primary">🔗 내 결과 공유하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In-Depth Guide Section on Animal Faces -->
+        <article class="article-body-box">
+            <h2>📖 동물상 관상학과 인공지능 분석 가이드</h2>
+            <p>동물상(Animal Face Types)은 사람의 이목구비 비율, 눈꼬리의 각도, 턱선, 입꼬리의 형태에 따라 특정 동물의 인상과 닮았다고 분류하는 한국 고유의 친근한 인상학적 문화입니다. 본 서비스는 구글의 최신 머신러닝 기술을 통해 객관적인 시각 특징을 백분율로 도출합니다.</p>
+
+            <h3>1. 강아지상 vs 고양이상 특징 비교표</h3>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>🐶 강아지상 (Dog Face)</th>
+                            <th>🐱 고양이상 (Cat Face)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>눈매 및 눈꼬리</strong></td>
+                            <td>동글동글하고 눈꼬리가 수평이거나 살짝 내려간 형태</td>
+                            <td>가로로 길고 눈꼬리가 살짝 올라간 또렷한 형태</td>
+                        </tr>
+                        <tr>
+                            <td><strong>턱선 및 얼굴형</strong></td>
+                            <td>부드러운 볼선과 둥근 U라인 턱선</td>
+                            <td>날렵하고 세련된 V라인 턱선</td>
+                        </tr>
+                        <tr>
+                            <td><strong>대표적인 인상</strong></td>
+                            <td>다정다감함, 친근함, 순둥이, 보호본능 자극</td>
+                            <td>도도함, 시크함, 신비로움, 도회적인 카리스마</td>
+                        </tr>
+                        <tr>
+                            <td><strong>추천 스타일링</strong></td>
+                            <td>내추럴 웨이브, 웜톤 파스텔, 부드러운 브라운 아이라인</td>
+                            <td>스트레이트 헤어, 쿨톤 모노톤, 엣지 있는 블랙 아이라인</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>2. 인공지능 분석 정확도를 극대화하는 촬영 팁</h3>
+            <ul>
+                <li><strong>정면 각도 유지</strong>: 얼굴이 정면을 향하고 턱이 과도하게 들리거나 숙여지지 않은 각도에서 가장 정확한 특징점 추출이 이루어집니다.</li>
+                <li><strong>밝고 균일한 조명</strong>: 얼굴에 짙은 그림자가 지지 않도록 자연광이나 밝은 실내 조명 아래에서 촬영된 사진을 권장합니다.</li>
+                <li><strong>안경 및 마스크 미착용</strong>: 눈매와 입술 선이 명확히 드러날수록 AI 신경망의 인식 정확도가 대폭 향상됩니다.</li>
+            </ul>
+        </article>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>❓ 동물상 테스트 관련 FAQ</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary class="faq-question">Q. 사진 분석 후 이미지는 어떻게 처리되나요?</summary>
+                    <div class="faq-answer">
+                        <p>모든 이미지 분석은 브라우저의 WebGL 자원을 활용하여 로컬에서 즉시 수행됩니다. 사진 데이터는 외부 서버에 전송되거나 저장되지 않으므로 개인정보 유출에 대해 안심하고 사용하셔도 됩니다.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Q. 연예인 사진이나 반려동물 사진도 분석 가능한가요?</summary>
+                    <div class="faq-answer">
+                        <p>인물 얼굴 사진에 최적화되어 있으므로 사람의 정면 얼굴 사진을 업로드하셨을 때 가장 정밀한 결과를 얻으실 수 있습니다.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        
+    <section class="comments-section">
+        <h3 class="comments-title">💬 커뮤니티 의견 나누기</h3>
+        <p class="comments-desc">나의 테스트 결과나 의견을 자유롭게 댓글로 남겨보세요!</p>
+        <div id="disqus_thread"></div>
+        <script>
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://product-ot07uvrdym.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+
+    </div>
+</main>
+
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <h3>✨ 럭키앤뷰티 랩</h3>
+                    <p>인공지능 비전 기술 기반의 동물상 분석과 수학적 통계 기반의 로또 6/45 연구를 제공하는 라이프스타일 테크 포털입니다.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>서비스 메뉴</h4>
+                    <ul>
+                        <li><a href="animal-test.html">AI 동물상 테스트</a></li>
+                        <li><a href="lotto.html">로또 6/45 번호 추첨</a></li>
+                        <li><a href="articles/index.html">전문 칼럼 & 가이드</a></li>
+                        <li><a href="sitemap.html">전체 사이트맵</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>정책 및 정보</h4>
+                    <ul>
+                        <li><a href="about.html">연구소 소개</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="contact.html">제휴 및 문의</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Lucky & Beauty Lab. All rights reserved.</p>
+                <p class="disclaimer">본 사이트의 AI 분석 및 로또 번호 추첨 서비스는 엔터테인먼트 및 정보 제공용이며, 복권 당첨 등을 보장하지 않습니다.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast">링크가 복사되었습니다! 🎉</div>
+    <script src="script.js"></script>
+</body>
+</html>

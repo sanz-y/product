@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능(AI)은 어떻게 사진에서 동물상을 인식할까? CNN 신경망 원리 | 럭키앤뷰티 랩</title>
+    <meta name="google-adsense-account" content="ca-pub-4764608029803832">
+    <meta name="description" content="구글 Teachable Machine과 TensorFlow.js 기반의 합성곱 신경망(CNN)이 얼굴의 특징점(Feature Map)을 추출하고 분류하는 컴퓨터 비전의 수학적 원리를 해설합니다.">
+    <meta property="og:title" content="인공지능(AI)은 어떻게 사진에서 동물상을 인식할까? CNN 신경망 원리 | 럭키앤뷰티 랩">
+    <meta property="og:description" content="구글 Teachable Machine과 TensorFlow.js 기반의 합성곱 신경망(CNN)이 얼굴의 특징점(Feature Map)을 추출하고 분류하는 컴퓨터 비전의 수학적 원리를 해설합니다.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sanz-y.github.io/product/articles/ai-computer-vision.html">
+    <link rel="canonical" href="https://sanz-y.github.io/product/articles/ai-computer-vision.html">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4764608029803832"
+         crossorigin="anonymous"></script>
+
+    <!-- TensorFlow.js & Teachable Machine Image Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+
+    <header class="global-header">
+        <div class="header-inner">
+            <a href="../index.html" class="logo">
+                <span class="logo-badge">✨ LAB</span>
+                <span class="logo-text">럭키앤뷰티 랩</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="../index.html" class="">홈</a>
+                <a href="../animal-test.html" class="">🐾 동물상 테스트</a>
+                <a href="../lotto.html" class="">🎱 로또 6/45</a>
+                <a href="../articles/index.html" class="active">📚 칼럼&가이드</a>
+                <a href="../about.html" class="">소개</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                    <span class="theme-icon" id="theme-icon">🌙</span>
+                    <span class="theme-text" id="theme-text">다크</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+<main class="page-container">
+    <div class="content-wrapper">
+        <article class="single-article">
+            <header class="article-header">
+                <span class="category-tag">AI & 머신러닝</span>
+                <h1>인공지능(AI)은 어떻게 사진에서 동물상을 인식할까? CNN 신경망 원리</h1>
+                <div class="article-meta">
+                    <span>✍️ AI 테크놀로지 랩</span>
+                    <span>📅 2026년 8월</span>
+                    <span>⏱️ 읽는 시간 약 7분</span>
+                </div>
+            </header>
+
+            <div class="article-body">
+                <p class="lead-paragraph">스마트폰으로 찍은 사진 한 장만으로 인공지능이 "이 사람은 85% 확률로 강아지상입니다"라고 판단할 수 있는 비결은 무엇일까요? 본 아티클에서는 구글의 <strong>TensorFlow.js</strong>와 <strong>합성곱 신경망(Convolutional Neural Network, CNN)</strong> 모델이 이미지를 해석하는 공학적 원리를 알기 쉽게 설명해 드립니다.</p>
+
+                <h2>1. 디지털 이미지를 숫자의 행렬(Matrix)로 변환하기</h2>
+                <p>컴퓨터는 사람처럼 눈으로 사진을 '바라보는' 것이 아니라, 픽셀(Pixel)의 밝기와 색상(RGB) 값을 2차원 수치 행렬(Matrix)로 읽어들입니다. 예를 들어 224x224 크기의 이미지는 224 x 224 x 3(Red, Green, Blue 채널) = 약 15만 개의 숫자 데이터로 변환됩니다.</p>
+
+                <h2>2. 합성곱 층(Convolutional Layer)의 필터링과 특징점 추출</h2>
+                <p>CNN 신경망의 핵심은 **'필터(Filter 또는 Kernel)'**라 불리는 작은 수학적 격자를 이미지 전체에 슬라이딩하면서 엣지(윤곽선), 질감, 곡률 등의 특징(Feature)을 추출하는 것입니다.</p>
+                <ul>
+                    <li><strong>초기 층(Low-level Features)</strong>: 눈꼬리의 직선/곡선 윤곽, 턱선의 경계선 등 단순한 선과 모서리를 감지합니다.</li>
+                    <li><strong>중간 층(Mid-level Features)</strong>: 추출된 선들이 모여 눈의 모양(타원형인지, 가로로 긴지), 콧날의 각도, 입술의 굴곡 등 국소적 형태를 인식합니다.</li>
+                    <li><strong>심층 층(High-level Features)</strong>: 얼굴 전체의 이목구비 비율과 골격 배치 등 복합적인 얼굴 랜드마크 패턴을 완성합니다.</li>
+                </ul>
+
+                <h2>3. 완전 연결 층(Fully Connected Layer)과 소프트맥스(Softmax) 확률 계산</h2>
+                <p>추출된 얼굴 특징 벡터는 최종적으로 **소프트맥스 함수(Softmax Function)**를 통과하여 각 클래스(강아지상 vs 고양이상)에 속할 확률의 합이 1(100%)이 되도록 정규화됩니다. 이를 통해 직관적인 백분율 수치가 산출되는 것입니다.</p>
+
+                <h2>4. 브라우저 내 WebGL 가속과 개인정보 보호</h2>
+                <p>본 사이트에서 사용하는 <code>@teachablemachine/image</code> 라이브러리는 웹 브라우저의 그래픽 하드웨어 가속(WebGL)을 활용합니다. 따라서 고용량의 사진을 외부 서버로 업로드할 필요 없이, 사용자의 기기 내부 GPU에서 밀리초(ms) 단위로 초고속 추론이 완료되어 완벽한 프라이버시를 보장합니다.</p>
+            </div>
+        </article>
+        
+    <section class="comments-section">
+        <h3 class="comments-title">💬 커뮤니티 의견 나누기</h3>
+        <p class="comments-desc">나의 테스트 결과나 의견을 자유롭게 댓글로 남겨보세요!</p>
+        <div id="disqus_thread"></div>
+        <script>
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://product-ot07uvrdym.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+
+    </div>
+</main>
+
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <h3>✨ 럭키앤뷰티 랩</h3>
+                    <p>인공지능 비전 기술 기반의 동물상 분석과 수학적 통계 기반의 로또 6/45 연구를 제공하는 라이프스타일 테크 포털입니다.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>서비스 메뉴</h4>
+                    <ul>
+                        <li><a href="../animal-test.html">AI 동물상 테스트</a></li>
+                        <li><a href="../lotto.html">로또 6/45 번호 추첨</a></li>
+                        <li><a href="../articles/index.html">전문 칼럼 & 가이드</a></li>
+                        <li><a href="../sitemap.html">전체 사이트맵</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>정책 및 정보</h4>
+                    <ul>
+                        <li><a href="../about.html">연구소 소개</a></li>
+                        <li><a href="../privacy.html">개인정보처리방침</a></li>
+                        <li><a href="../terms.html">이용약관</a></li>
+                        <li><a href="../contact.html">제휴 및 문의</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Lucky & Beauty Lab. All rights reserved.</p>
+                <p class="disclaimer">본 사이트의 AI 분석 및 로또 번호 추첨 서비스는 엔터테인먼트 및 정보 제공용이며, 복권 당첨 등을 보장하지 않습니다.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast">링크가 복사되었습니다! 🎉</div>
+    <script src="../script.js"></script>
+</body>
+</html>

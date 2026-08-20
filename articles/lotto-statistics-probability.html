@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 6/45 수학적 확률의 진실: 814만 분의 1과 통계학적 조합 전략 | 럭키앤뷰티 랩</title>
+    <meta name="google-adsense-account" content="ca-pub-4764608029803832">
+    <meta name="description" content="조합론(Combinatorics)과 대수의 법칙, 역대 로또 당첨 데이터 분포를 통해 분석한 홀짝 비율, 고저 스프레드, 총합 구간의 수학적 원리를 분석합니다.">
+    <meta property="og:title" content="로또 6/45 수학적 확률의 진실: 814만 분의 1과 통계학적 조합 전략 | 럭키앤뷰티 랩">
+    <meta property="og:description" content="조합론(Combinatorics)과 대수의 법칙, 역대 로또 당첨 데이터 분포를 통해 분석한 홀짝 비율, 고저 스프레드, 총합 구간의 수학적 원리를 분석합니다.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sanz-y.github.io/product/articles/lotto-statistics-probability.html">
+    <link rel="canonical" href="https://sanz-y.github.io/product/articles/lotto-statistics-probability.html">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4764608029803832"
+         crossorigin="anonymous"></script>
+
+    <!-- TensorFlow.js & Teachable Machine Image Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+
+    <header class="global-header">
+        <div class="header-inner">
+            <a href="../index.html" class="logo">
+                <span class="logo-badge">✨ LAB</span>
+                <span class="logo-text">럭키앤뷰티 랩</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="../index.html" class="">홈</a>
+                <a href="../animal-test.html" class="">🐾 동물상 테스트</a>
+                <a href="../lotto.html" class="">🎱 로또 6/45</a>
+                <a href="../articles/index.html" class="active">📚 칼럼&가이드</a>
+                <a href="../about.html" class="">소개</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                    <span class="theme-icon" id="theme-icon">🌙</span>
+                    <span class="theme-text" id="theme-text">다크</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+<main class="page-container">
+    <div class="content-wrapper">
+        <article class="single-article">
+            <header class="article-header">
+                <span class="category-tag">통계 & 수학</span>
+                <h1>로또 6/45 수학적 확률의 진실: 814만 분의 1과 통계학적 조합 전략</h1>
+                <div class="article-meta">
+                    <span>✍️ 응용통계학 리서치팀</span>
+                    <span>📅 2026년 8월</span>
+                    <span>⏱️ 읽는 시간 약 8분</span>
+                </div>
+            </header>
+
+            <div class="article-body">
+                <p class="lead-paragraph">매주 수많은 사람들이 인생역전의 꿈을 안고 로또 6/45 복권을 구매합니다. 과연 1등 당첨 번호는 완전히 통제 불가능한 순수한 우연의 산물일까요, 아니면 수학적 통계 모델을 통해 일정한 패턴을 관찰할 수 있을까요? 조합론과 확률론의 관점에서 로또 6/45를 해부합니다.</p>
+
+                <h2>1. 1등 당첨 확률 8,145,060분의 1의 유도 과정</h2>
+                <p>로또 6/45는 1부터 45까지의 서로 다른 45개의 공 중 순서에 상관없이 6개를 뽑는 **조합(Combination)**입니다. 수학적 조합 공식은 다음과 같습니다:</p>
+                <div class="math-formula-box">
+                    <strong><sub>45</sub>C<sub>6</sub> = (45 × 44 × 43 × 42 × 41 × 40) / (6 × 5 × 4 × 3 × 2 × 1) = 8,145,060</strong>
+                </div>
+                <p>즉, 발생 가능한 모든 번호 조합의 수는 정확히 814만 5,060가지이며, 1장을 구매했을 때 1등에 당첨될 확률은 약 <strong>0.000012277%</strong>에 해당합니다. 이는 벼락을 맞을 확률보다도 낮은 극히 희박한 수치입니다.</p>
+
+                <h2>2. 대수의 법칙(Law of Large Numbers)과 정규분포</h2>
+                <p>확률론의 기본 정리인 **대수의 법칙**에 따르면, 추첨 회차가 수천 회 이상 누적될수록 각 번호(1~45번)의 출현 빈도는 평균값(총 추첨 공 수 ÷ 45)에 점진적으로 수렴하게 됩니다. 특정 번호가 일시적으로 자주 나오거나 덜 나올 수는 있지만, 장기적으로는 균등한 분포를 형성합니다.</p>
+
+                <h2>3. 실전 번호 조합 시 피해야 할 극단적 패턴</h2>
+                <ul>
+                    <li><strong>연속 6개 번호 (예: 1, 2, 3, 4, 5, 6)</strong>: 이론상 나올 확률은 다른 조합과 같으나, 전체 814만 개 조합 중 단 40개(0.00049%)에 불과합니다.</li>
+                    <li><strong>모두 홀수 또는 모두 짝수</strong>: 전체 조합 중 1.8%에 불과하므로, 3:3 또는 4:2의 균형 배분이 통계적으로 유리합니다.</li>
+                    <li><strong>동일 끝수 과다 조합 (예: 3, 13, 23, 33, 43...)</strong>: 끝자리가 같은 숫자가 4개 이상 중복되는 경우 역시 통계적으로 매우 드뭅니다.</li>
+                </ul>
+            </div>
+        </article>
+        
+    <section class="comments-section">
+        <h3 class="comments-title">💬 커뮤니티 의견 나누기</h3>
+        <p class="comments-desc">나의 테스트 결과나 의견을 자유롭게 댓글로 남겨보세요!</p>
+        <div id="disqus_thread"></div>
+        <script>
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://product-ot07uvrdym.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+
+    </div>
+</main>
+
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <h3>✨ 럭키앤뷰티 랩</h3>
+                    <p>인공지능 비전 기술 기반의 동물상 분석과 수학적 통계 기반의 로또 6/45 연구를 제공하는 라이프스타일 테크 포털입니다.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>서비스 메뉴</h4>
+                    <ul>
+                        <li><a href="../animal-test.html">AI 동물상 테스트</a></li>
+                        <li><a href="../lotto.html">로또 6/45 번호 추첨</a></li>
+                        <li><a href="../articles/index.html">전문 칼럼 & 가이드</a></li>
+                        <li><a href="../sitemap.html">전체 사이트맵</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>정책 및 정보</h4>
+                    <ul>
+                        <li><a href="../about.html">연구소 소개</a></li>
+                        <li><a href="../privacy.html">개인정보처리방침</a></li>
+                        <li><a href="../terms.html">이용약관</a></li>
+                        <li><a href="../contact.html">제휴 및 문의</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Lucky & Beauty Lab. All rights reserved.</p>
+                <p class="disclaimer">본 사이트의 AI 분석 및 로또 번호 추첨 서비스는 엔터테인먼트 및 정보 제공용이며, 복권 당첨 등을 보장하지 않습니다.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast">링크가 복사되었습니다! 🎉</div>
+    <script src="../script.js"></script>
+</body>
+</html>
