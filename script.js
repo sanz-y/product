@@ -68,3 +68,52 @@ function getBallColorClass(num) {
     return 'ball-green';
 }
 
+// 제휴 및 문의 폼 (Formspree AJAX 전송)
+const contactForm = document.getElementById('contact-form');
+const submitBtn = document.getElementById('submit-btn');
+const formStatus = document.getElementById('form-status');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중...';
+        formStatus.textContent = '';
+        formStatus.className = 'form-status';
+
+        try {
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formStatus.textContent = '✅ 문의가 성공적으로 접수되었습니다! 곧 답변드리겠습니다.';
+                formStatus.className = 'form-status success';
+                contactForm.reset();
+            } else {
+                const data = await response.json();
+                if (data && data.errors) {
+                    formStatus.textContent = '❌ ' + data.errors.map(err => err.message).join(', ');
+                } else {
+                    formStatus.textContent = '❌ 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+                }
+                formStatus.className = 'form-status error';
+            }
+        } catch (error) {
+            formStatus.textContent = '❌ 네트워크 오류가 발생했습니다. 다시 시도해 주세요.';
+            formStatus.className = 'form-status error';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
+}
+
+
