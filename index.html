@@ -3,31 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>심플 로또 추첨기</title>
+    <title>AI 동물상 테스트 - 강아지상 vs 고양이상</title>
+    <meta name="description" content="인공지능이 분석하는 나의 동물상! 강아지상일까, 고양이상일까? 지금 바로 테스트해보세요.">
+    <meta property="og:title" content="AI 동물상 테스트 - 강아지상 vs 고양이상">
+    <meta property="og:description" content="인공지능이 알려주는 나의 얼굴 동물상! 사진으로 바로 확인해보세요.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sanz-y.github.io/product/">
     <link rel="stylesheet" href="style.css">
+    <!-- TensorFlow.js & Teachable Machine Image Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- 헤더 및 다크모드 토글 -->
         <div class="header">
-            <h1>로또 번호 추첨</h1>
+            <div class="header-titles">
+                <h1>🐾 AI 동물상 테스트</h1>
+                <p class="subtitle">나는 강아지상일까, 고양이상일까?</p>
+            </div>
             <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
                 <span class="theme-icon" id="theme-icon">🌙</span>
                 <span class="theme-text" id="theme-text">다크모드</span>
             </button>
         </div>
-        <div id="lotto-container" class="ball-container">
-            <!-- 번호 공이 여기에 생성됩니다 -->
-            <div class="ball placeholder">?</div>
-            <div class="ball placeholder">?</div>
-            <div class="ball placeholder">?</div>
-            <div class="ball placeholder">?</div>
-            <div class="ball placeholder">?</div>
-            <div class="ball placeholder">?</div>
+
+        <!-- 안내 뱃지 -->
+        <div class="privacy-badge">
+            <span>🔒 사진은 서버에 저장되지 않고 기기 내에서 안전하게 분석됩니다.</span>
         </div>
-        <button id="draw-btn">번호 추첨하기</button>
+
+        <!-- 메인 테스트 영역 -->
+        <div class="test-card">
+            <!-- 이미지 업로드 전 영역 -->
+            <div id="upload-area" class="upload-area">
+                <input type="file" id="image-input" accept="image/*" class="file-input">
+                <div class="upload-prompt" id="upload-prompt">
+                    <div class="upload-icon">📸</div>
+                    <p class="upload-title">얼굴 사진을 올려주세요</p>
+                    <p class="upload-desc">클릭하거나 사진을 이곳으로 드래그 앤 드롭하세요</p>
+                    <button type="button" class="upload-btn" id="select-file-btn">사진 선택하기</button>
+                </div>
+            </div>
+
+            <!-- 이미지 미리보기 & 분석 로딩 -->
+            <div id="preview-area" class="preview-area" style="display: none;">
+                <div class="image-wrapper">
+                    <img id="face-image" src="" alt="업로드된 얼굴 사진">
+                </div>
+                
+                <!-- 분석 로딩 인디케이터 -->
+                <div id="loading-spinner" class="loading-box">
+                    <div class="spinner"></div>
+                    <p class="loading-text">인공지능이 동물상을 분석하고 있어요...</p>
+                </div>
+
+                <!-- 결과 영역 -->
+                <div id="result-area" class="result-area" style="display: none;">
+                    <div class="result-header">
+                        <span id="result-badge" class="result-badge">결과</span>
+                        <h2 id="result-title" class="result-title">강아지상</h2>
+                        <p id="result-desc" class="result-desc">설명</p>
+                        <div id="result-tags" class="result-tags"></div>
+                    </div>
+
+                    <!-- 퍼센트 그래프 영역 -->
+                    <div class="chart-container">
+                        <div class="chart-item">
+                            <div class="chart-label">
+                                <span>🐶 강아지상</span>
+                                <span id="dog-percent" class="percent-val">0%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div id="dog-bar" class="progress-bar dog-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-label">
+                                <span>🐱 고양이상</span>
+                                <span id="cat-percent" class="percent-val">0%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div id="cat-bar" class="progress-bar cat-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 액션 버튼들 -->
+                    <div class="action-buttons">
+                        <button id="retry-btn" class="btn btn-secondary">🔄 다른 사진으로 다시하기</button>
+                        <button id="share-btn" class="btn btn-primary">🔗 결과 공유하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <hr class="divider">
 
+        <!-- 제휴 및 문의 섹션 -->
         <div class="inquiry-section">
             <h2>🤝 제휴 및 문의</h2>
             <form id="contact-form" action="https://formspree.io/f/mvkpdlzv" method="POST">
@@ -50,7 +124,9 @@
 
         <hr class="divider">
 
+        <!-- DISQUS 댓글 섹션 -->
         <div class="comments-section">
+            <h3 class="comments-title">💬 의견 나누기</h3>
             <div id="disqus_thread"></div>
             <script>
                 /**
@@ -72,6 +148,10 @@
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     </div>
+
+    <!-- 공유 알림 토스트 -->
+    <div id="toast" class="toast">링크가 클립보드에 복사되었습니다! 🎉</div>
+
     <script src="script.js"></script>
 </body>
 </html>
