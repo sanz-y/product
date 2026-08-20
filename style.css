@@ -157,6 +157,43 @@ h1 {
     transform: scale(0.96);
 }
 
+/* 상단 네비게이션 탭 */
+.nav-tabs {
+    display: flex;
+    background-color: var(--toggle-bg);
+    padding: 4px;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    gap: 4px;
+}
+
+.nav-tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-tab.active {
+    background-color: var(--bg-container);
+    color: var(--text-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav-tab:hover:not(.active) {
+    color: var(--text-main);
+}
+
 /* 개인정보 보호 뱃지 */
 .privacy-badge {
     background-color: var(--privacy-bg);
@@ -169,7 +206,7 @@ h1 {
     text-align: center;
 }
 
-/* 업로드 영역 */
+/* 동물상 테스트 카드 */
 .test-card {
     background-color: var(--bg-card);
     border: 2px dashed var(--border-color);
@@ -440,6 +477,85 @@ h1 {
 
 .btn:active {
     transform: scale(0.97);
+}
+
+/* 로또 추첨 서비스 카드 */
+.lotto-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.lotto-intro {
+    font-size: 1rem;
+    color: var(--text-sub);
+    font-weight: 600;
+    margin: 0 0 1.2rem 0;
+}
+
+.ball-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.ball {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: inset -3px -3px 5px rgba(0, 0, 0, 0.25), 0 4px 10px rgba(0, 0, 0, 0.12);
+    animation: bounce 0.5s ease;
+}
+
+.placeholder {
+    background-color: var(--toggle-bg);
+    color: var(--text-muted);
+    border: 2px dashed var(--border-color);
+    box-shadow: none;
+}
+
+/* 로또 색상 규칙 */
+.ball-yellow { background-color: #fbc400; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); } /* 1-10 */
+.ball-blue { background-color: #69c8f2; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); } /* 11-20 */
+.ball-red { background-color: #ff7272; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); } /* 21-30 */
+.ball-gray { background-color: #aaaaaa; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); } /* 31-40 */
+.ball-green { background-color: #b0d840; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); } /* 41-45 */
+
+.draw-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 13px 30px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    width: 100%;
+    font-weight: 700;
+}
+
+.draw-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.draw-btn:active {
+    transform: scale(0.97);
+}
+
+@keyframes bounce {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 /* 구분선 */

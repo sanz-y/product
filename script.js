@@ -1,8 +1,94 @@
-// Teachable Machine 모델 URL
+// ==========================================
+// 1. 서비스 탭 전환 로직 (동물상 테스트 vs 로또 추첨)
+// ==========================================
+const tabAnimal = document.getElementById('tab-animal');
+const tabLotto = document.getElementById('tab-lotto');
+const serviceAnimal = document.getElementById('service-animal');
+const serviceLotto = document.getElementById('service-lotto');
+const mainHeaderTitle = document.getElementById('main-header-title');
+const mainHeaderSubtitle = document.getElementById('main-header-subtitle');
+
+function switchService(serviceName) {
+    if (serviceName === 'lotto') {
+        tabLotto.classList.add('active');
+        tabAnimal.classList.remove('active');
+        serviceLotto.style.display = 'block';
+        serviceAnimal.style.display = 'none';
+        if (mainHeaderTitle) mainHeaderTitle.textContent = '🎱 행운의 로또 번호 추첨';
+        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '인생역전! 오늘의 6가지 행운 번호를 뽑아보세요';
+        window.location.hash = 'lotto';
+    } else {
+        tabAnimal.classList.add('active');
+        tabLotto.classList.remove('active');
+        serviceAnimal.style.display = 'block';
+        serviceLotto.style.display = 'none';
+        if (mainHeaderTitle) mainHeaderTitle.textContent = '🐾 AI 동물상 테스트';
+        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '나는 강아지상일까, 고양이상일까?';
+        window.location.hash = 'animal';
+    }
+}
+
+if (tabAnimal && tabLotto) {
+    tabAnimal.addEventListener('click', () => switchService('animal'));
+    tabLotto.addEventListener('click', () => switchService('lotto'));
+}
+
+// URL 해시에 따른 초기 탭 설정
+if (window.location.hash === '#lotto') {
+    switchService('lotto');
+}
+
+// ==========================================
+// 2. 로또 번호 추첨 로직
+// ==========================================
+const drawBtn = document.getElementById('draw-btn');
+const lottoContainer = document.getElementById('lotto-container');
+
+if (drawBtn && lottoContainer) {
+    drawBtn.addEventListener('click', () => {
+        const numbers = generateLottoNumbers();
+        
+        // 기존 공 비우기
+        lottoContainer.innerHTML = '';
+        
+        // 새로운 번호 공 순차 생성 (애니메이션)
+        numbers.forEach((num, index) => {
+            setTimeout(() => {
+                const ball = document.createElement('div');
+                ball.classList.add('ball');
+                ball.classList.add(getBallColorClass(num));
+                ball.textContent = num;
+                lottoContainer.appendChild(ball);
+            }, index * 100);
+        });
+    });
+}
+
+function generateLottoNumbers() {
+    const numbers = [];
+    while (numbers.length < 6) {
+        const rand = Math.floor(Math.random() * 45) + 1;
+        if (!numbers.includes(rand)) {
+            numbers.push(rand);
+        }
+    }
+    return numbers.sort((a, b) => a - b);
+}
+
+function getBallColorClass(num) {
+    if (num <= 10) return 'ball-yellow';
+    if (num <= 20) return 'ball-blue';
+    if (num <= 30) return 'ball-red';
+    if (num <= 40) return 'ball-gray';
+    return 'ball-green';
+}
+
+// ==========================================
+// 3. AI 동물상 테스트 (Teachable Machine)
+// ==========================================
 const MODEL_URL = "https://teachablemachine.withgoogle.com/models/p74Y4s7yv/";
 let model = null;
 
-// 동물상별 상세 데이터
 const ANIMAL_INFO = {
     dog: {
         badge: '🐶 강아지상',
@@ -20,7 +106,6 @@ const ANIMAL_INFO = {
     }
 };
 
-// AI 모델 로드
 async function loadModel() {
     if (model) return model;
     try {
@@ -29,13 +114,11 @@ async function loadModel() {
         model = await tmImage.load(modelURL, metadataURL);
         return model;
     } catch (error) {
-        console.error("모델 로딩 실패:", error);
-        alert("AI 모델을 불러오는 중 오류가 발생했습니다. 네트워크 연결을 확인해 주세요.");
+        console.error("AI 모델 로드 실패:", error);
         return null;
     }
 }
 
-// DOM 요소들
 const uploadArea = document.getElementById('upload-area');
 const imageInput = document.getElementById('image-input');
 const selectFileBtn = document.getElementById('select-file-btn');
@@ -57,7 +140,6 @@ const retryBtn = document.getElementById('retry-btn');
 const shareBtn = document.getElementById('share-btn');
 const toast = document.getElementById('toast');
 
-// 파일 선택 버튼 트리거
 if (selectFileBtn) {
     selectFileBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -70,7 +152,6 @@ if (uploadArea) {
         imageInput.click();
     });
 
-    // 드래그 앤 드롭 이벤트
     ['dragenter', 'dragover'].forEach(eventName => {
         uploadArea.addEventListener(eventName, (e) => {
             e.preventDefault();
@@ -96,14 +177,14 @@ if (uploadArea) {
     });
 }
 
-// 파일 인풋 변경 이벤트
-imageInput.addEventListener('change', (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-        handleImageFile(e.target.files[0]);
-    }
-});
+if (imageInput) {
+    imageInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            handleImageFile(e.target.files[0]);
+        }
+    });
+}
 
-// 이미지 파일 처리 및 예측 실행
 function handleImageFile(file) {
     if (!file.type.startsWith('image/')) {
         alert('이미지 파일(JPG, PNG 등)만 업로드 가능합니다.');
@@ -111,16 +192,14 @@ function handleImageFile(file) {
     }
 
     const reader = new FileReader();
-    reader.onload = async (e) => {
+    reader.onload = (e) => {
         faceImage.src = e.target.result;
         
-        // 화면 전환: 업로드 영역 숨기고 미리보기/로딩 표시
         uploadArea.style.display = 'none';
         previewArea.style.display = 'block';
         loadingSpinner.style.display = 'block';
         resultArea.style.display = 'none';
 
-        // 이미지가 로드된 후 예측 수행
         faceImage.onload = async () => {
             await predict();
         };
@@ -128,11 +207,12 @@ function handleImageFile(file) {
     reader.readAsDataURL(file);
 }
 
-// 인공지능 동물상 예측 함수
 async function predict() {
     const aiModel = await loadModel();
     if (!aiModel) {
         loadingSpinner.style.display = 'none';
+        alert("AI 모델을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        resetUpload();
         return;
     }
 
@@ -151,7 +231,6 @@ async function predict() {
             }
         });
 
-        // 합이 1이 되도록 정규화
         const total = dogProbability + catProbability;
         const dogRate = total > 0 ? (dogProbability / total) * 100 : 50;
         const catRate = total > 0 ? (catProbability / total) * 100 : 50;
@@ -159,17 +238,14 @@ async function predict() {
         const dogRounded = Math.round(dogRate);
         const catRounded = 100 - dogRounded;
 
-        // 주 동물상 판정
         const primaryAnimal = dogRounded >= catRounded ? 'dog' : 'cat';
         const info = ANIMAL_INFO[primaryAnimal];
 
-        // 결과 UI 렌더링
         resultBadge.textContent = info.badge;
         resultBadge.className = `result-badge ${info.badgeClass}`;
         resultTitle.textContent = info.title;
         resultDesc.textContent = info.desc;
 
-        // 태그 렌더링
         resultTags.innerHTML = '';
         info.tags.forEach(tag => {
             const span = document.createElement('span');
@@ -178,14 +254,12 @@ async function predict() {
             resultTags.appendChild(span);
         });
 
-        // 퍼센트 수치 및 게이지 바 업데이트
         dogPercent.textContent = `${dogRounded}%`;
         catPercent.textContent = `${catRounded}%`;
 
         loadingSpinner.style.display = 'none';
         resultArea.style.display = 'block';
 
-        // 프로그레스 바 애니메이션 적용
         setTimeout(() => {
             dogBar.style.width = `${dogRounded}%`;
             catBar.style.width = `${catRounded}%`;
@@ -198,23 +272,21 @@ async function predict() {
     }
 }
 
-// 다시하기 기능
 function resetUpload() {
-    imageInput.value = '';
-    faceImage.src = '';
-    dogBar.style.width = '0%';
-    catBar.style.width = '0%';
-    previewArea.style.display = 'none';
-    resultArea.style.display = 'none';
-    loadingSpinner.style.display = 'none';
-    uploadArea.style.display = 'block';
+    if (imageInput) imageInput.value = '';
+    if (faceImage) faceImage.src = '';
+    if (dogBar) dogBar.style.width = '0%';
+    if (catBar) catBar.style.width = '0%';
+    if (previewArea) previewArea.style.display = 'none';
+    if (resultArea) resultArea.style.display = 'none';
+    if (loadingSpinner) loadingSpinner.style.display = 'none';
+    if (uploadArea) uploadArea.style.display = 'block';
 }
 
 if (retryBtn) {
     retryBtn.addEventListener('click', resetUpload);
 }
 
-// 공유하기 기능
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
         const shareData = {
@@ -226,11 +298,8 @@ if (shareBtn) {
         if (navigator.share) {
             try {
                 await navigator.share(shareData);
-            } catch (err) {
-                // 사용자가 취소한 경우는 무시
-            }
+            } catch (err) {}
         } else {
-            // 클립보드 복사 폴백
             try {
                 await navigator.clipboard.writeText(window.location.href);
                 showToast('링크가 클립보드에 복사되었습니다! 🎉');
@@ -250,7 +319,9 @@ function showToast(message) {
     }, 2500);
 }
 
-// 테마 관리 (다크모드 / 라이트모드)
+// ==========================================
+// 4. 테마 관리 (다크모드 / 라이트모드)
+// ==========================================
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 const themeText = document.getElementById('theme-text');
@@ -260,11 +331,11 @@ function applyTheme(theme) {
     localStorage.setItem('theme', theme);
     
     if (theme === 'dark') {
-        themeIcon.textContent = '☀️';
-        themeText.textContent = '라이트모드';
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = '라이트모드';
     } else {
-        themeIcon.textContent = '🌙';
-        themeText.textContent = '다크모드';
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = '다크모드';
     }
 
     if (typeof DISQUS !== 'undefined') {
@@ -272,13 +343,11 @@ function applyTheme(theme) {
     }
 }
 
-// 초기 테마 설정 (로컬 스토리지 또는 OS 기본 테마)
 const savedTheme = localStorage.getItem('theme');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
 applyTheme(initialTheme);
 
-// 테마 토글 이벤트
 if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -287,12 +356,13 @@ if (themeToggleBtn) {
     });
 }
 
-// 페이지 로드 시 AI 모델 미리 로드 (선택적 최적화)
 window.addEventListener('DOMContentLoaded', () => {
     loadModel();
 });
 
-// 제휴 및 문의 폼 (Formspree AJAX 전송)
+// ==========================================
+// 5. 제휴 및 문의 폼 (Formspree AJAX)
+// ==========================================
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
 const formStatus = document.getElementById('form-status');
