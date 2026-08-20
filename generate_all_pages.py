@@ -48,6 +48,7 @@ def get_header(active_nav="", is_subfolder=False):
                 <a href="{prefix}animal-test.html" class="{'active' if active_nav=='animal' else ''}">🐾 동물상 테스트</a>
                 <a href="{prefix}lotto.html" class="{'active' if active_nav=='lotto' else ''}">🎱 로또 6/45</a>
                 <a href="{prefix}articles/index.html" class="{'active' if active_nav=='articles' else ''}">📚 칼럼&가이드</a>
+                <a href="https://digitalwprkshop.blogspot.com/" target="_blank" rel="noopener noreferrer">📝 공식 블로그</a>
                 <a href="{prefix}about.html" class="{'active' if active_nav=='about' else ''}">소개</a>
             </nav>
             <div class="header-actions">
@@ -76,6 +77,7 @@ def get_footer(is_subfolder=False):
                         <li><a href="{prefix}animal-test.html">AI 동물상 테스트</a></li>
                         <li><a href="{prefix}lotto.html">로또 6/45 번호 추첨</a></li>
                         <li><a href="{prefix}articles/index.html">전문 칼럼 & 가이드</a></li>
+                        <li><a href="https://digitalwprkshop.blogspot.com/" target="_blank" rel="noopener noreferrer">공식 블로그 (Blogger) ↗</a></li>
                         <li><a href="{prefix}sitemap.html">전체 사이트맵</a></li>
                     </ul>
                 </div>
@@ -1000,9 +1002,10 @@ sitemap_content = get_head(
             </div>
 
             <div class="sitemap-col">
-                <h3>ℹ️ 회사 및 정책</h3>
+                <h3>ℹ️ 회사 및 채널</h3>
                 <ul>
                     <li><a href="about.html">연구소 소개 (About Us)</a></li>
+                    <li><a href="https://digitalwprkshop.blogspot.com/" target="_blank" rel="noopener noreferrer">📝 공식 Blogger 블로그 (Blog) ↗</a></li>
                     <li><a href="privacy.html">개인정보처리방침 (Privacy Policy)</a></li>
                     <li><a href="terms.html">이용약관 (Terms of Service)</a></li>
                     <li><a href="contact.html">제휴 및 문의 (Contact Us)</a></li>

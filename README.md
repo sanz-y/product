@@ -13,6 +13,7 @@
 - **동물상 테스트**: [https://sanz-y.github.io/product/animal-test.html](https://sanz-y.github.io/product/animal-test.html)
 - **로또 6/45 번호 추첨**: [https://sanz-y.github.io/product/lotto.html](https://sanz-y.github.io/product/lotto.html)
 - **칼럼 & 가이드**: [https://sanz-y.github.io/product/articles/index.html](https://sanz-y.github.io/product/articles/index.html)
+- **공식 블로그 (Blogger)**: [https://digitalwprkshop.blogspot.com/](https://digitalwprkshop.blogspot.com/)
 - **ads.txt**: [https://sanz-y.github.io/product/ads.txt](https://sanz-y.github.io/product/ads.txt) (및 루트 도메인: [https://sanz-y.github.io/ads.txt](https://sanz-y.github.io/ads.txt))
 
 ---
