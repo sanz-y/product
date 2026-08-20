@@ -14,6 +14,10 @@ function applyTheme(theme) {
         themeIcon.textContent = '🌙';
         themeText.textContent = '다크모드';
     }
+
+    if (typeof DISQUS !== 'undefined') {
+        DISQUS.reset({ reload: true });
+    }
 }
 
 // 초기 테마 설정 (로컬 스토리지 또는 OS 기본 테마)
