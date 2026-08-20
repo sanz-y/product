@@ -1,45 +1,90 @@
 // ==========================================
-// 1. 서비스 탭 전환 로직 (동물상 테스트 vs 로또 추첨)
+// 1. 서비스 탭 전환 로직 (동물상 테스트 vs 로또 추첨 vs 가이드)
 // ==========================================
 const tabAnimal = document.getElementById('tab-animal');
 const tabLotto = document.getElementById('tab-lotto');
+const tabGuides = document.getElementById('tab-guides');
+
 const serviceAnimal = document.getElementById('service-animal');
 const serviceLotto = document.getElementById('service-lotto');
+const serviceGuides = document.getElementById('service-guides');
+
 const mainHeaderTitle = document.getElementById('main-header-title');
 const mainHeaderSubtitle = document.getElementById('main-header-subtitle');
 
 function switchService(serviceName) {
+    const tabs = [tabAnimal, tabLotto, tabGuides];
+    const sections = [serviceAnimal, serviceLotto, serviceGuides];
+
+    tabs.forEach(tab => tab && tab.classList.remove('active'));
+    sections.forEach(sec => sec && (sec.style.display = 'none'));
+
     if (serviceName === 'lotto') {
-        tabLotto.classList.add('active');
-        tabAnimal.classList.remove('active');
-        serviceLotto.style.display = 'block';
-        serviceAnimal.style.display = 'none';
-        if (mainHeaderTitle) mainHeaderTitle.textContent = '🎱 행운의 로또 번호 추첨';
+        if (tabLotto) tabLotto.classList.add('active');
+        if (serviceLotto) serviceLotto.style.display = 'block';
+        if (mainHeaderTitle) mainHeaderTitle.textContent = '🎱 행운의 로또 6/45 연구소';
         if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '인생역전! 오늘의 6가지 행운 번호를 뽑아보세요';
         window.location.hash = 'lotto';
+    } else if (serviceName === 'guides') {
+        if (tabGuides) tabGuides.classList.add('active');
+        if (serviceGuides) serviceGuides.style.display = 'block';
+        if (mainHeaderTitle) mainHeaderTitle.textContent = '📚 관상 & 인공지능 분석 가이드';
+        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '동물상 관상학적 매력 분석과 AI 및 로또 통계 심층 칼럼';
+        window.location.hash = 'guides';
     } else {
-        tabAnimal.classList.add('active');
-        tabLotto.classList.remove('active');
-        serviceAnimal.style.display = 'block';
-        serviceLotto.style.display = 'none';
+        if (tabAnimal) tabAnimal.classList.add('active');
+        if (serviceAnimal) serviceAnimal.style.display = 'block';
         if (mainHeaderTitle) mainHeaderTitle.textContent = '🐾 AI 동물상 테스트';
-        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '나는 강아지상일까, 고양이상일까?';
+        if (mainHeaderSubtitle) mainHeaderSubtitle.textContent = '인공지능이 분석하는 나의 얼굴 동물상! 나는 강아지상일까, 고양이상일까?';
         window.location.hash = 'animal';
     }
 }
 
-if (tabAnimal && tabLotto) {
-    tabAnimal.addEventListener('click', () => switchService('animal'));
-    tabLotto.addEventListener('click', () => switchService('lotto'));
-}
+if (tabAnimal) tabAnimal.addEventListener('click', () => switchService('animal'));
+if (tabLotto) tabLotto.addEventListener('click', () => switchService('lotto'));
+if (tabGuides) tabGuides.addEventListener('click', () => switchService('guides'));
 
 // URL 해시에 따른 초기 탭 설정
 if (window.location.hash === '#lotto') {
     switchService('lotto');
+} else if (window.location.hash === '#guides') {
+    switchService('guides');
 }
 
 // ==========================================
-// 2. 로또 번호 추첨 로직
+// 2. 모달 팝업 컨트롤 (소개, 개인정보처리방침, 이용약관)
+// ==========================================
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+window.openModal = openModal;
+window.closeModal = closeModal;
+
+// ESC 키로 모달 닫기
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop.show').forEach(modal => {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+});
+
+// ==========================================
+// 3. 로또 번호 추첨 로직
 // ==========================================
 const drawBtn = document.getElementById('draw-btn');
 const lottoContainer = document.getElementById('lotto-container');
@@ -84,7 +129,7 @@ function getBallColorClass(num) {
 }
 
 // ==========================================
-// 3. AI 동물상 테스트 (Teachable Machine)
+// 4. AI 동물상 테스트 (Teachable Machine)
 // ==========================================
 const MODEL_URL = "https://teachablemachine.withgoogle.com/models/p74Y4s7yv/";
 let model = null;
@@ -290,8 +335,8 @@ if (retryBtn) {
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
         const shareData = {
-            title: 'AI 동물상 테스트',
-            text: '내가 강아지상일까, 고양이상일까? 인공지능으로 나의 동물상을 확인해보세요!',
+            title: 'AI 동물상 테스트 & 로또 6/45 연구소',
+            text: '인공지능으로 나의 동물상도 분석하고 행운의 로또 번호도 뽑아보세요!',
             url: window.location.href
         };
 
@@ -320,7 +365,7 @@ function showToast(message) {
 }
 
 // ==========================================
-// 4. 테마 관리 (다크모드 / 라이트모드)
+// 5. 테마 관리 (다크모드 / 라이트모드)
 // ==========================================
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
@@ -361,7 +406,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 5. 제휴 및 문의 폼 (Formspree AJAX)
+// 6. 제휴 및 문의 폼 (Formspree AJAX)
 // ==========================================
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
