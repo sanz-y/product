@@ -8,15 +8,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>로또 번호 추첨</h1>
+        <div class="header">
+            <h1>로또 번호 추첨</h1>
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                <span class="theme-icon" id="theme-icon">🌙</span>
+                <span class="theme-text" id="theme-text">다크모드</span>
+            </button>
+        </div>
         <div id="lotto-container" class="ball-container">
             <!-- 번호 공이 여기에 생성됩니다 -->
-             <div class="ball placeholder">?</div>
-             <div class="ball placeholder">?</div>
-             <div class="ball placeholder">?</div>
-             <div class="ball placeholder">?</div>
-             <div class="ball placeholder">?</div>
-             <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
+            <div class="ball placeholder">?</div>
         </div>
         <button id="draw-btn">번호 추첨하기</button>
     </div>
